@@ -145,46 +145,37 @@ var palindrome = function(string) {
 // modulo(5,2) // 1
 // modulo(17,5) // 2
 // modulo(22,6) // 4
-// var modulo = function(x, y) {
-//   // start with x, then subtract y multiple times until the amount becomes less than y
-//   if (y < 0) {
-//     y *= -1;
-//   }
-
-//   var resultIsPositive = true;
-//   if (x < 0) {
-//     x *= -1;
-//     resultIsPositive = false;
-//   }
-
-//   var recursive = function(x, y) {
-//     if (x < y) {
-//       return x;
-//     } else {
-//       return recursive(x - y, y)
-//     }
-//   }
-
-//   recursive(x, y);
-//   // returns a number
-//   if (resultIsPositive) {
-//     return x;
-//   } else {
-//     return -x;
-//   }
-// };
-
-
 var modulo = function(x, y) {
-  // x = Math.abs(x);
-  // y = Math.abs(y);
-  if (x === 0 || y === 0) {
+  var resultIsPositive;
+  var remainder;
+  if (y > 0 && x > 0) {
+    resultIsPositive = true;
+  } else if (x < 0 && y < 0) {
+    x = -x;
+    y = -y;
+    resultIsPositive = false;
+  } else if (x < 0 && y > 0) {
+    x = -x;
+    resultIsPositive = false;
+  } else if (x > 0 && y < 0) {
+    y = -y;
+    resultIsPositive = true;
+  }
+  if (x === 0 && y === 0) {
     return NaN;
   }
+  if (x === 0 || y === 0) {
+    return 0;
+  }
   if (x < y) {
-    return x;
+    remainder = x;
   } else {
-    return modulo(x - y, y);
+    remainder = modulo(x - y, y);
+  }
+  if (resultIsPositive !== false) {
+    return remainder;
+  } else {
+    return -remainder;
   }
 };
 
