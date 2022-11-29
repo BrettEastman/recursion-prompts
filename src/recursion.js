@@ -145,12 +145,81 @@ var palindrome = function(string) {
 // modulo(5,2) // 1
 // modulo(17,5) // 2
 // modulo(22,6) // 4
+// var modulo = function(x, y) {
+//   // start with x, then subtract y multiple times until the amount becomes less than y
+//   if (y < 0) {
+//     y *= -1;
+//   }
+
+//   var resultIsPositive = true;
+//   if (x < 0) {
+//     x *= -1;
+//     resultIsPositive = false;
+//   }
+
+//   var recursive = function(x, y) {
+//     if (x < y) {
+//       return x;
+//     } else {
+//       return recursive(x - y, y)
+//     }
+//   }
+
+//   recursive(x, y);
+//   // returns a number
+//   if (resultIsPositive) {
+//     return x;
+//   } else {
+//     return -x;
+//   }
+// };
+
+
 var modulo = function(x, y) {
+  // x = Math.abs(x);
+  // y = Math.abs(y);
+  if (x === 0 || y === 0) {
+    return NaN;
+  }
+  if (x < y) {
+    return x;
+  } else {
+    return modulo(x - y, y);
+  }
 };
 
 // 12. Write a function that multiplies two numbers without using the * operator or
 // Math methods.
 var multiply = function(x, y) {
+  var resultIsPositive;
+  var product;
+  if (y > 0 && x > 0) {
+    resultIsPositive = true;
+  } else if (x < 0 && y < 0) {
+    x = -x;
+    y = -y;
+    resultIsPositive = true;
+  } else if (x < 0 && y > 0) {
+    x = -x;
+    resultIsPositive = false;
+  } else if (y < 0 && x > 0) {
+    y = -y;
+    resultIsPositive = false;
+  }
+  if (x === 0 || y === 0) {
+    return 0;
+  }
+  if (y === 1) {
+    return x;
+  }
+  y--;
+  product = x + multiply(x, y);
+
+  if (resultIsPositive !== false) {
+    return product;
+  } else {
+    return -product;
+  }
 };
 
 // 13. Write a function that divides two numbers without using the / operator or
